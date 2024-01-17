@@ -5,16 +5,22 @@ const input = form.querySelector('input');
 const textarea = form.querySelector('textarea');
 
 form.addEventListener('submit', event => {
-  console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
   event.preventDefault();
+
+  if (input.value.trim() === '' || textarea.value.trim() === '') {
+    alert('Будь ласка, заповніть всі поля форми перед відправленням.');
+    return;
+  }
+
+  console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
   localStorage.removeItem(STORAGE_KEY);
   event.currentTarget.reset();
 });
 
 form.addEventListener('input', () => {
   const storageData = {
-    email: input.value,
-    message: textarea.value,
+    email: input.value.trim(),
+    message: textarea.value.trim(),
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(storageData));
 });
@@ -24,8 +30,10 @@ function populateStorageData() {
   if (savedStorageData) {
     const savedEmail = savedStorageData.email;
     const savedMessage = savedStorageData.message;
-    if (savedEmail && savedMessage) {
+    if (savedStorageData.email) {
       input.value = savedEmail;
+    }
+    if (savedStorageData.message) {
       textarea.value = savedMessage;
     }
   }
