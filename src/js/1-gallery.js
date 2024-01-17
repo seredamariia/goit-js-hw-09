@@ -81,7 +81,7 @@ const markup = images
   .join('');
 ulGallery.insertAdjacentHTML('beforeend', markup);
 
-let gallery = new SimpleLightbox('.gallery-link', {
+let gallery = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
